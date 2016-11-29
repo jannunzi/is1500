@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="solution.css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2>Get Quote On Painting</h2>
+
+<hr/>
+
+Number of Rooms:
+<input id="rooms"
+       type="number"
+       autofocus
+       min="0"
+       max="8"
+       value="1"/>
+<span id="number-error" class="error-message">
+</span>
+
+<br/>
+
+<input id="ceiling"
+       type="checkbox"/>
+Paint Ceiling?
+
+<br/>
+Needed by:
+<input type="date"/>
+
+<br/>
+<button onclick="requestEstimate()">
+    Request Estimate
+</button>
+
+<br/>
+<span id="estimate" class="estimate">
+</span>
+
+<script>
+    function requestEstimate() {
+
+        document.getElementById("number-error").innerHTML = "";
+        document.getElementById("estimate").innerHTML = "";
+
+        var rooms = document.getElementById("rooms").value;
+
+        if(rooms == "" || rooms < 1 || rooms > 8 || isNaN(rooms)) {
+            document.getElementById("number-error").innerHTML = "Enter a number between 1 and 8";
+            document.getElementById("estimate").innerHTML = "No Estimate Available";
+            return;
+        }
+
+        var ceiling = document.getElementById("ceiling").checked;
+        var cost = rooms * 400;
+        if(ceiling) {
+            cost = cost + 100 * rooms;
+        }
+        if(rooms >= 3) {
+            cost = cost * 0.9;
+        }
+
+        var message = "The estimate cost of painting "+rooms+" room";
+        if(rooms > 1) {
+            message = message + "s";
+        }
+        if(ceiling) {
+            message = message + " with ceiling";
+        }
+        cost = Math.round(cost);
+        message = message + " is $"+cost;
+
+        document.getElementById("estimate").innerHTML = message;
+    }
+</script>
+
+</body>
+</html>
